@@ -1,14 +1,14 @@
 import confetti from 'canvas-confetti'
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-import { Board } from "./Components/Board.jsx"
-import { Square } from "./Components/Square.jsx"
-import { WinnerModal } from "./Components/WinnerModal.jsx"
-import { checkEndGame, chekWinnerFrom } from "./Logic/Board.js"
+import { Board } from './Components/Board.jsx'
+import { Square } from './Components/Square.jsx'
+import { WinnerModal } from './Components/WinnerModal.jsx'
+import { checkEndGame, chekWinnerFrom } from './Logic/Board.js'
 import { resetGameStorage, saveGameToStorage } from './Logic/Storage/index.js'
 import { TURNS } from './constants.js'
 
-function App() {
+function App () {
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
     return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
@@ -35,7 +35,7 @@ function App() {
   const updateBoard = (index) => {
     // No actualizamos esta posicion
     // si ya tiene algo o existe un ganador
-    if(board[index] || winner) return
+    if (board[index] || winner) return
     // actualizar tablero
     const newBoard = [...board]
     newBoard[index] = turn
@@ -48,9 +48,9 @@ function App() {
       board: newBoard,
       currentTurn: newTurn
     })
-    //Verificar si existe un ganador
+    // Verificar si existe un ganador
     const newWinner = chekWinnerFrom(newBoard)
-    if(newWinner) {
+    if (newWinner) {
       confetti()
       setWinner(newWinner)
     } else if (checkEndGame(newBoard)) {
@@ -65,9 +65,9 @@ function App() {
   return (
     <main className='board'>
       <h1>Tres en raya</h1>
-      <button onClick={resetGame} >Reset el juego</button>
+      <button onClick={resetGame}>Reset el juego</button>
       <section className='game'>
-      <Board boardToRender={board} updateBoard={updateBoard}/>
+        <Board boardToRender={board} updateBoard={updateBoard} />
       </section>
 
       <section className='turn'>
@@ -79,7 +79,7 @@ function App() {
         </Square>
       </section>
 
-      <WinnerModal winner={winner} resetGame={resetGame}/>
+      <WinnerModal winner={winner} resetGame={resetGame} />
     </main>
   )
 }
